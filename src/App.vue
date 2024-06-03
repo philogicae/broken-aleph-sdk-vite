@@ -1,20 +1,21 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
 
-import { AuthenticatedAlephHttpClient } from '@aleph-sdk/client';
-import { importAccountFromPrivateKey } from '@aleph-sdk/ethereum';
+import { AuthenticatedAlephHttpClient } from "@aleph-sdk/client";
+import { importAccountFromPrivateKey } from "@aleph-sdk/ethereum";
 
 // Importing any method from '@aleph-sdk/ethereum' throws an error
-const account = importAccountFromPrivateKey("61308da48bee9ab58702d805136e7d16de3e6769b7185cfc425ef66f427598ca");
+const account = importAccountFromPrivateKey(
+  "61308da48bee9ab58702d805136e7d16de3e6769b7185cfc425ef66f427598ca"
+);
 
 const client = new AuthenticatedAlephHttpClient(account);
-const message = await client.createAggregate({
-  key: "profile",
-  content: {"bio": "tester", "name": "Moshe on Ethereum"},
-});
-
-console.log(message.content);
-
+client
+  .createAggregate({
+    key: "profile",
+    content: { bio: "tester", name: "Moshe on Ethereum" },
+  })
+  .then((msg) => console.log(msg.content));
 </script>
 
 <template>
